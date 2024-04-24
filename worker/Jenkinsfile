@@ -25,6 +25,8 @@ pipeline{
         dir('worker'){
           sh 'mvn clean test'
 
+        }
+
       }
 
     }
@@ -35,12 +37,12 @@ pipeline{
         dir('worker'){
           sh 'mvn package'
    
-      }
+        }
 
+      }
+  
     }
-  
   }
-  
   post{
     always{
       echo 'Building multibranch pileine for worker completed'
