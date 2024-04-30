@@ -1,13 +1,17 @@
 pipeline{
-  agent any
+  agent none
 
-  tools{
-    nodejs 'nodejs 8.9.0'
-  }
   stages{
     stage("build"){
       when{
         changeset "**/result/**"
+      }
+      agent{
+            docker{
+              image 'node:8.16.0-alpine'
+#              args '-v $HOME/.m2:/root/.m2'
+
+            } 
       }
       steps{
         echo 'Compiling result app..'
@@ -20,6 +24,13 @@ pipeline{
       when{
         changeset "**/result/**"
       }
+      agent{
+            docker{
+              image 'node:8.16.0-alpine'
+#             args '-v $HOME/.m2:/root/.m2'
+
+            } 
+      }
       steps{
         echo 'Running Unit Tests on result app..'
         dir('result'){
@@ -29,8 +40,4 @@ pipeline{
       } 
     }
   }
-
-
-
-
 }
